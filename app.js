@@ -15,7 +15,7 @@ var pool = mysql.createPool({
 
 // ensure request has database connection
 
-var withConnection = function (handler) {
+var withDb = function (handler) {
   return function (req, resp) {
     pool.getConnection(function (err, connection) {
       if (err) {
@@ -46,7 +46,7 @@ var withBody = function (handler) {
 
 // main web handler
 
-var server = http.createServer(withConnection(withBody(function (req, resp) {
+var server = http.createServer(withDb(withBody(function (req, resp) {
 
   // get the HTTP method, path and body of the request
   var method = req.method;
