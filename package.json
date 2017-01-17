@@ -1,0 +1,11 @@
+{
+    "name": "js-crud-api",
+    "description": "A Node.js port of the full php-crud-api project (single file REST API)",
+    "version": "0.0.1",
+    "author": "Maurits van der Schee <maurits@vdschee.nl>",
+    "repository": "mevdschee/js-crud-api",
+    "license": "MIT",
+    "dependencies": {
+        "mysql": "*"
+    }
+}
