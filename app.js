@@ -82,7 +82,7 @@ var server = http.createServer(withDb(withBody(function (req, resp) {
   var sql = '';
   switch (req.method) {
     case 'GET':
-      sql = "select * from " + table + (key ? " WHERE id=" + key : '');
+      sql = "select * from " + table + (key ? " where id=" + key : '');
       break;
     case 'PUT':
       sql = "update " + table + " set " + set + " where id=" + key;
