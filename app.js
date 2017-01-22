@@ -59,24 +59,7 @@ var server = http.createServer(withDb(withBody(function (req, resp) {
 
   // retrieve the table and key from the path
   var table = req.db.escapeId(request.shift());
-  var key = parseInt(request.shift());
-
-  // escape the columns and values from the input object
-  var columns = Object.keys(input).map(function (key) {
-    return req.db.escapeId(key);
-  });
-  var values = Object.keys(input).map(function (key) {
-    var value = input[key];
-    if (value === null) return null;
-    return req.db.escape(value);
-  });
-
-  // build the SET part of the SQL command
-  var set = '';
-  for (i = 0; i < columns.length; i++) {
-    set += (i > 0 ? ',' : '') + columns[i] + '=';
-    set += (values[i] === null ? 'NULL' : values[i]);
-  }
+  var key = req.db.escape(request.shift());
 
   // create SQL based on HTTP method
   var sql = '';
@@ -85,10 +68,10 @@ var server = http.createServer(withDb(withBody(function (req, resp) {
       sql = "select * from " + table + (key ? " where id=" + key : '');
       break;
     case 'PUT':
-      sql = "update " + table + " set " + set + " where id=" + key;
+      sql = "update " + table + " set ? where id=" + key;
       break;
     case 'POST':
-      sql = "insert into " + table + " set " + set;
+      sql = "insert into " + table + " set ?";
       break;
     case 'DELETE':
       sql = "delete " + table + " where id=" + key;
@@ -96,7 +79,7 @@ var server = http.createServer(withDb(withBody(function (req, resp) {
   }
 
   // execute SQL statement
-  req.db.query(sql, function (err, result) {
+  req.db.query(sql, input, function (err, result) {
 
     // stop using mysql connection
     req.db.release();
