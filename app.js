@@ -6,9 +6,9 @@ var mysql = require("mysql");
 var pool = mysql.createPool({
   connectionLimit: 100, //important
   host: 'localhost',
-  user: 'php-crud-api',
-  password: 'php-crud-api',
-  database: 'php-crud-api',
+  user: 'js-crud-api',
+  password: 'js-crud-api',
+  database: 'js-crud-api',
   charset: 'utf8',
   debug: false
 });
