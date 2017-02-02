@@ -12,7 +12,7 @@ Then build the server.
 
 ###Running
 
-To run the api (during development) type:
+To run the api type:
 
     node app.js
 
